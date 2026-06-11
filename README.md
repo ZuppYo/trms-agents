@@ -163,6 +163,28 @@ trns-agents dub "https://www.youtube.com/watch?v=VIDEO_ID" --mode local --resume
 | `TRNS_BATCH_MINUTES` | `5` | ความยาว batch |
 | `TRNS_TTS_VOICE_LOCAL` | `th-TH-NiwatNeural` | เสียง Edge TTS |
 | `TRNS_NLLB_MODEL` | `facebook/nllb-200-distilled-600M` | โมเดลแปล |
+| `TRNS_TTS_MAX_TEMPO` | `1.15` | เร่ง TTS สูงสุดเมื่อชน segment ถัดไป |
+
+---
+
+## จังหวะเสียง (timing)
+
+YouTube caption มัก **ทับซ้อนกัน** — ตอน assemble ระบบจะ:
+
+1. วางเสียงที่ **`start_ms` เสมอ** (sync กับจอ)
+2. ถ้า TTS ยาวเกิน `min(end_ms, next.start_ms)` — เร่งด้วย `atempo` (สูงสุด `TRNS_TTS_MAX_TEMPO`, ค่าเริ่มต้น 1.15) แล้ว trim หางถ้ายังเกิน
+3. เป้าหมาย: drift ≈ 0, ไม่ทับ audio (`timeline_audio_overlaps: 0`)
+
+ทดสอบหลังแก้ assembly:
+
+```powershell
+# Smoke ~5 นาที (batch 0)
+trns-agents dub "URL" --mode local --resume --max-batches 1
+
+# วิเคราะห์ drift + overlap
+python scripts/analyze_dub_timing.py .trns-agents/VIDEO_ID --batch 0
+python scripts/analyze_dub_timing.py .trns-agents/VIDEO_ID
+```
 
 ---
 
@@ -171,7 +193,7 @@ trns-agents dub "https://www.youtube.com/watch?v=VIDEO_ID" --mode local --resume
 - **ใช้ส่วนตัวเท่านั้น** — ไม่ได้ออกแบบสำหรับเผยแพร่เชิงพาณิชย์หรือละเมิดลิขสิทธิ์
 - **ต้องมี caption บน YouTube** — ถ้าไม่มี auto-caption ให้ใช้ `--transcript` ใส่ไฟล์ SRT/VTT เอง (faster-whisper ยังไม่รวมใน POC)
 - **คุณภาพแปล** — NLLB ใช้ได้แต่ไม่ natural เท่า LLM; ประโยคยาวหรือศัพท์เฉพาะอาจผิด
-- **TTS** — เสียงเดียวทั้งเรื่อง ไม่มี speaker diarization / ปรับจังหวะตามความยาว segment อัตโนมัติ
+- **TTS / timing** — เสียงเดียวทั้งเรื่อง; segment ที่ชนกันอาจเร่งเล็กน้อย (≤1.15×) หรือถูก trim; ช่วงเงียบระหว่างประโยคเป็นเรื่องปกติ
 - **เวลารัน** — วิดีโอ ~30 นาที ใช้เวลาหลายสิบนาที (แปล + TTS บน CPU)
 - **โหมด cloud** — มีในโค้ดแต่ยังไม่ใช่ workflow หลักของ Phase 1
 - **รูปแบบวิดีโอ** — yt-dlp อาจดาวน์โหลดแยก video+audio ถ้า FFmpeg ไม่อยู่ใน PATH ของ yt-dlp
@@ -184,6 +206,7 @@ trns-agents dub "https://www.youtube.com/watch?v=VIDEO_ID" --mode local --resume
 |-------|--------|
 | `ffmpeg` not found | ติดตั้ง FFmpeg หรือเพิ่ม WinGet bin เข้า PATH |
 | ไม่มีเสียงใน MP4 | รัน remux อีกครั้งด้วย `--resume` (ไม่ใส่ `--skip-render`) |
+| เสียงทับซ้อน / ไม่ต่อ | remux ใหม่ (assembly v2); ตรวจด้วย `scripts/analyze_dub_timing.py` |
 | `source.mp4 missing` | ติดตั้ง yt-dlp; ตรวจ FFmpeg สำหรับ merge |
 | Auto transcript failed | วิดีโอไม่มี caption → `--transcript file.srt` |
 | แปลช้า / RAM เต็ม | ลด `TRNS_NLLB_BATCH_SIZE` หรือใช้ `--max-batches` ทีละน้อย |

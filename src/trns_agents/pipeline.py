@@ -136,9 +136,18 @@ def run_dub_pipeline(
     if skip_render:
         return work
 
-    total_ms = max((s.end_ms for s in doc.segments), default=0)
+    assemble_segs = [
+        s
+        for s in doc.segments
+        if s.status == SegmentStatus.TTS_DONE and s.tts_wav and Path(s.tts_wav).exists()
+    ]
+    if max_batches is not None:
+        allowed_batches = set(batch_ids)
+        assemble_segs = [s for s in assemble_segs if s.batch_id in allowed_batches]
+
+    total_ms = max((s.end_ms for s in assemble_segs), default=0)
     dubbed_wav = work.path("dubbed.full.wav")
-    assemble_dubbed_audio(doc.segments, total_ms, dubbed_wav)
+    assemble_dubbed_audio(assemble_segs, total_ms, dubbed_wav)
     console.print(f"[green]Assembled[/] {dubbed_wav}")
 
     source_mp4 = work.path("source.mp4")

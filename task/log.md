@@ -84,3 +84,19 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 ## [2026-06-11 15:00] archived | 001–007
 - moved: task/001–007 → task/archive/2026-06-11/
 - note: Phase 1 POC closed; all numbered tasks archived
+
+## [2026-06-11 16:00] created | 008-dub-audio-continuity
+- type: improvement
+- note: วิเคราะห์เสียงไม่ต่อเนื่อง/ทับซ้อน — caption overlap + amix + no time-fit
+
+## [2026-06-12 08:10] executed | 008-dub-audio-continuity
+- completed: T001–T006
+- note: sequential timeline + atempo fit; smoke batch 0; full remux; overlaps 0
+
+## [2026-06-12 12:00] created | 009-session-handoff-av-sync
+- type: handoff
+- note: เสียงไม่ตรงวิดีโอ — drift ~9.5 min median; dub 54 min vs video 34 min
+
+## [2026-06-11 14:30] executed | 009-session-handoff-av-sync
+- completed: T001–T004, T006 (partial)
+- note: anchor start_ms + atempo≤1.15/trim; drift 0; timeline ~34 min; smoke batch 0 OK

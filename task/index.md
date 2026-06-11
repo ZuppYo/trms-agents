@@ -4,7 +4,10 @@ Read for **active** vs **archived** tasks. Use recent entries in `task/log.md` o
 
 ## Active (`task/`)
 
-_(none — Phase 1 POC archived 2026-06-11)_
+| Slug | Title | Type | Tags | Updated | Status |
+|------|-------|------|------|---------|--------|
+| [008-dub-audio-continuity](./008-dub-audio-continuity.md) | 008 — Dub audio continuity & overlap fix | improvement | audio, render, dub | 2026-06-12 | done |
+| [009-session-handoff-av-sync](./009-session-handoff-av-sync.md) | 009 — Session handoff: A/V sync | handoff | continuity, audio, sync | 2026-06-11 | open |
 
 ## Archived (`task/archive/`)
 
