@@ -42,7 +42,7 @@ Related: [AGENTS](../AGENTS.md) · [prompt.md](./prompt.md) · [002-brt-user-req
 | SC2 | โหมด **cloud (Gemini)** และ **local** ใช้งานได้ทั้งคู่ | Must |
 | SC3 | ส่งออก MP4 — **เสียงไทยแทนที่เสียงเดิม** (video track เดิม) | Must |
 | SC4 | แปลและพากย์ฟังเข้าใจได้ (natural Thai ยอมรับได้) | Must |
-| SC5 | ความยาววิดีโอสูงสุด Phase 1 | **รอยืนยัน** (แนะนำ ≤30 นาที) |
+| SC5 | รองรับวิดีโอ **>30 นาที** ด้วย chunked pipeline + `--resume` | Must |
 
 ### Out of scope Phase 1 → Phase 2
 
@@ -62,7 +62,7 @@ Related: [AGENTS](../AGENTS.md) · [prompt.md](./prompt.md) · [002-brt-user-req
 - [x] T003 [N] ระบุ **use cases หลัก** อย่างน้อย 3 ข้อ (พร้อมตัวอย่าง URL ถ้ามี)
   - ✅ UC01–UC03 + example URL QbjAQFJJyt0
 - [x] T004 [N] กำหนด **success criteria** Phase 1 (เช่น ความยาววิดีโอสูงสุด, คุณภาพเสียงขั้นต่ำ)
-  - ✅ SC1–SC4 ยืนยัน; SC5 รอยืนยันความยาวสูงสุด
+  - ✅ SC1–SC5 ยืนยัน; SC5 = chunked pipeline สำหรับวิดีโอยาว
 - [x] T005 [N] ยืนยัน **out of scope** Phase 1 และสิ่งที่เลื่อนไป Phase 2
   - ✅ ตาราง out of scope ด้านบน
 - [x] T006 [N] อัปเดต [AGENTS.md](../AGENTS.md) continuity snapshot หลังผู้ใช้ยืนยัน

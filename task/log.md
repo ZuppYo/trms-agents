@@ -25,3 +25,19 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 ## [2026-06-11 12:00] created | 005-brt-constraints-risks
 - type: planning
 - note: BRT005 ข้อจำกัด กฎหมาย และความเสี่ยง
+
+## [2026-06-11 14:00] executed | 001-brt-project-vision
+- completed: T001–T006
+- note: personal use, replace audio, Gemini+local, example QbjAQFJJyt0
+
+## [2026-06-11 14:00] executed | 002-brt-user-requirements
+- completed: T001–T006
+- note: R01–R13, MoSCoW; CLI/subtitle/max-length รอยืนยัน
+
+## [2026-06-11 15:00] executed | 002-brt-user-requirements
+- completed: round 2 answers
+- note: CLI, subtitle, male TTS, Whisper+manual, >30min chunked
+
+## [2026-06-11 15:00] executed | 003-brt-pipeline-architecture
+- completed: T001–T006
+- note: chunked pipeline, resume, work dir, dual backend, mermaid

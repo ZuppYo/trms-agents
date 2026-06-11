@@ -4,10 +4,7 @@ type: planning
 detail: "ประเมินและเลือก library/API สำหรับแต่ละ stage ของ pipeline"
 tags: [brt, tech-stack, research]
 created: 2026-06-11
-updated: 2026-06-11
----
-
-# BRT004 — Tech stack evaluation
+updated: 2026-06-11 — Tech stack evaluation
 
 Related: [003-brt-pipeline-architecture](./003-brt-pipeline-architecture.md) · [005-brt-constraints-risks](./005-brt-constraints-risks.md)
 
@@ -51,33 +48,41 @@ Related: [003-brt-pipeline-architecture](./003-brt-pipeline-architecture.md) · 
 - **FFmpeg** — mux, burn subtitle, duck audio
 - **Demucs** (optional) — แยก vocal/BGM ก่อน dub
 
-## Recommended default (Phase 1 draft)
+## Recommended default (Phase 1 — locked from BRT002/003)
 
 ```
 Python 3.11+
-├── youtube-transcript-api  (caption path)
-├── yt-dlp + openai-whisper (fallback path)
-├── google-genai            (translate + optional Gemini TTS)
-├── edge-tts                (free TTS fallback)
-└── ffmpeg                  (render)
+├── youtube-transcript-api   # auto caption
+├── faster-whisper           # fallback ASR (long video)
+├── google-genai             # cloud: translate + Gemini TTS (male)
+├── transformers + NLLB      # local translate
+├── edge-tts                 # local TTS: th-TH-NiwatNeural
+├── yt-dlp + ffmpeg          # download + mux
+└── pydantic / json          # segments schema
 ```
 
-> ต้องยืนยันกับผู้ใช้ใน BRT002 ก่อน lock
+## Final stack (locked 2026-06-11)
+
+| Stage | cloud | local | Rationale |
+|-------|-------|-------|-----------|
+| Transcript auto | youtube-transcript-api | same | ฟรี, มี timestamp |
+| Transcript fallback | faster-whisper | same | วิดีโอยาว, VAD |
+| Transcript manual | VTT/SRT parser | same | Obsidian Web Clipper |
+| Translate | Gemini 2.5 Flash | NLLB-200-distilled-600M | คุณภาพ vs offline |
+| TTS (male) | Gemini TTS `Charon`/`Iapetus` | Edge `th-TH-NiwatNeural` | ผู้ใช้ขอเสียงชาย |
+| Long video | batch checkpoint + `--resume` | same | >30 min real-world |
+| Render | FFmpeg replace audio | same | R04 |
+| Subtitle | export `.srt` / `.vtt` | same | R05 |
 
 ## Checklist
 
-- [ ] T001 [N] ยืนยัน **transcript** strategy กับผู้ใช้
-- [ ] T002 [N] ยืนยัน **translation** provider
-- [ ] T003 [N] ยืนยัน **TTS** provider (และเสียงไทยที่ต้องการ)
-- [ ] T004 [N] ประเมิน **cost estimate** ต่อวิดีโอ 10 นาที (rough)
-- [ ] T005 [N] บันทึก **final stack table** ใน section ด้านล่าง
-- [ ] T006 [N] สร้าง `requirements.txt` draft (หรือระบุใน task execution ถัดไป)
-
-## Final stack (กรอกหลังยืนยัน)
-
-| Stage | Choice | Rationale |
-|-------|--------|-----------|
-| Transcript | _(รอกรอก)_ | |
-| Translate | _(รอกรอก)_ | |
-| TTS | _(รอกรอก)_ | |
-| Render | FFmpeg + yt-dlp | industry standard |
+- [x] T001 [N] ยืนยัน **transcript** strategy กับผู้ใช้
+  - ✅ auto + Whisper + manual import
+- [x] T002 [N] ยืนยัน **translation** provider
+  - ✅ Gemini (cloud) / NLLB (local)
+- [x] T003 [N] ยืนยัน **TTS** provider (เสียงผู้ชาย)
+  - ✅ Gemini male / Edge NiwatNeural
+- [ ] T004 [N] ประเมิน **cost estimate** ต่อวิดีโอ 60 นาที (rough)
+- [x] T005 [N] บันทึก **final stack table**
+  - ✅ ตารางด้านบน
+- [ ] T006 [N] สร้าง `requirements.txt` draft
