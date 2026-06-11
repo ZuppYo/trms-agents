@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 
 from ..models import Segment, SegmentStatus
+from .nllb import translate_texts
 
 
 def translate_segments_gemini(segments: list[Segment], api_key: str | None = None) -> list[Segment]:
@@ -39,8 +40,9 @@ def translate_segments_gemini(segments: list[Segment], api_key: str | None = Non
 
 
 def translate_segments_local(segments: list[Segment]) -> list[Segment]:
-    """Placeholder: copy EN text until NLLB pipeline is wired."""
-    return [
-        seg.model_copy(update={"text_th": seg.text_en, "status": SegmentStatus.TRANSLATED})
-        for seg in segments
-    ]
+    texts = [s.text_en for s in segments]
+    translated = translate_texts(texts)
+    out: list[Segment] = []
+    for seg, th in zip(segments, translated, strict=True):
+        out.append(seg.model_copy(update={"text_th": th, "status": SegmentStatus.TRANSLATED}))
+    return out

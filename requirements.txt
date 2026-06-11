@@ -10,10 +10,12 @@ yt-dlp>=2024.0
 # Cloud (Gemini)
 google-genai>=1.0
 
-# Local translate / ASR (optional — install extras as needed)
+# Local translate / ASR (install: pip install -e ".[local]")
 # faster-whisper>=1.0
 # transformers>=4.40
 # torch>=2.0
+# sentencepiece>=0.2
+# sacremoses>=0.1
 
 # Local TTS
 edge-tts>=6.1

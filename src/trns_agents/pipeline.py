@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.progress import Progress
 
 from .batch import assign_batches, group_by_batch
+from .batch_reset import reset_batches
 from .models import BackendMode, ProjectMeta, Segment, SegmentStatus, SegmentsDocument, extract_video_id
 from .render import download_video, replace_audio, write_srt
 from .render.audio import assemble_dubbed_audio
@@ -50,15 +51,19 @@ def run_dub_pipeline(
     skip_download: bool = False,
     skip_render: bool = False,
     max_batches: int | None = None,
+    redo_batches: list[int] | None = None,
 ) -> WorkDir:
     video_id = extract_video_id(url)
     work = WorkDir(video_id)
     batch_mins = batch_minutes or int(os.environ.get("TRNS_BATCH_MINUTES", "5"))
 
-    if work.segments_path.exists() and resume:
+    if work.segments_path.exists() and (resume or redo_batches):
         doc = work.load_segments()
         meta = work.load_meta()
         console.print(f"[green]Resume[/] — {len(doc.segments)} segments loaded")
+        if redo_batches:
+            doc = reset_batches(work, doc, redo_batches)
+            console.print(f"[yellow]Reset batches[/] {redo_batches} for reprocess")
     else:
         segments, source = acquire_transcript(video_id, url, transcript_file)
         segments = assign_batches(segments, batch_mins)
@@ -85,27 +90,29 @@ def run_dub_pipeline(
         task = progress.add_task("Processing batches", total=len(batch_ids))
         for batch_id in batch_ids:
             batch_segs = groups[batch_id]
-            if resume and work.is_batch_done(batch_id):
+            if resume and work.is_batch_done(batch_id) and not (
+                redo_batches and batch_id in redo_batches
+            ):
                 progress.advance(task)
                 continue
 
-            batch_dir = work.batch_dir(batch_id)
-            pending = [s for s in batch_segs if s.status == SegmentStatus.PENDING]
-            if pending:
+            to_translate = [s for s in batch_segs if not s.text_th or s.status == SegmentStatus.PENDING]
+            if to_translate:
                 if mode == BackendMode.CLOUD:
-                    translated = translate_segments_gemini(pending)
+                    translated = translate_segments_gemini(to_translate)
                 else:
-                    translated = translate_segments_local(pending)
-            else:
-                translated = batch_segs
+                    translated = translate_segments_local(to_translate)
+                updated_map = {s.id: s for s in translated}
+                for i, seg in enumerate(doc.segments):
+                    if seg.id in updated_map:
+                        doc.segments[i] = updated_map[seg.id]
+                batch_segs = [doc.segments[i] for i, s in enumerate(doc.segments) if s.batch_id == batch_id]
 
-            updated_map = {s.id: s for s in translated}
-            for i, seg in enumerate(doc.segments):
-                if seg.id in updated_map:
-                    doc.segments[i] = updated_map[seg.id]
-
-            for seg in translated:
+            batch_dir = work.batch_dir(batch_id)
+            for seg in batch_segs:
                 wav_path = batch_dir / "tts" / f"{seg.id}.wav"
+                if seg.tts_wav and Path(seg.tts_wav).exists() and seg.status == SegmentStatus.TTS_DONE:
+                    continue
                 if mode == BackendMode.CLOUD:
                     synthesize_segment_cloud(seg, wav_path, voice=voice)
                 else:

@@ -54,6 +54,6 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 - type: execution
 - note: Python CLI + pipeline skeleton
 
-## [2026-06-11 16:00] executed | 006-poc-implementation-scaffold
-- completed: T001–T006
-- note: src/trns_agents package; T007 smoke test pending
+## [2026-06-11 18:00] executed | 006-poc-implementation-scaffold
+- completed: T008, T008b, T010, T011
+- note: NLLB local; batch 0-1 Thai dub ~326 segments
