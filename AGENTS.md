@@ -2,28 +2,23 @@
 
 ## Repository mission
 
-YouTube EN → TH dubbing assistant — **local-first** Phase 1 (personal use)
+YouTube EN → TH dubbing assistant — **personal use**; Phase 1 local audio **done** → Phase 2 **cloud (Gemini)**
 
-**Progress (QbjAQFJJyt0)**
-- TTS ครบ 1126 segments
-- A/V sync: anchor `start_ms` + mild atempo (009 T001–T004 ✅)
-- FFmpeg ✅ | yt-dlp ✅
+## Non-negotiable rules
+
+- Personal use only | work dir `.trns-agents/{video_id}/`
+- `--resume` for long video | `--max-batches 1` for smoke
 
 ## Reload pack (new session)
 
-- `@task/009-session-handoff-av-sync.md` ← T005 full remux + subjective listen
+- `@task/010-session-handoff-cloud-gemini.md` ← **start here**
+- `@src/trns_agents/translate/__init__.py` · `@src/trns_agents/tts/__init__.py`
 - `@src/trns_agents/render/audio.py`
-- `@scripts/analyze_dub_timing.py`
 
 ## Continuity — latest activity
 
 ### Snapshot (2026-06-11)
 
-- Done: 009 T001–T004 — policy A; drift median **0**; full timeline **~34 min** (was ~54 min)
-- Smoke `--max-batches 1` remux OK
-- Next: T005 full remux + listen 0/10/20 min; T006 docs (partial)
-
-## Non-negotiable rules
-
-- Personal use only | local mode default
-- `--resume` for long video | work dir `.trns-agents/{video_id}/`
+- Done: [008](./task/archive/2026-06-11/008-dub-audio-continuity.md) audio continuity · [009](./task/archive/2026-06-12/009-session-handoff-av-sync.md) A/V sync (anchor `start_ms`, drift 0)
+- Next: [010 cloud Gemini](./task/010-session-handoff-cloud-gemini.md) — `--mode cloud` แทน local
+- Reload: `@task/010-session-handoff-cloud-gemini.md`

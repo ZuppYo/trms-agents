@@ -100,3 +100,14 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 ## [2026-06-11 14:30] executed | 009-session-handoff-av-sync
 - completed: T001–T004, T006 (partial)
 - note: anchor start_ms + atempo≤1.15/trim; drift 0; timeline ~34 min; smoke batch 0 OK
+
+## [2026-06-11 16:00] archived | 008-dub-audio-continuity
+- moved: task/008-dub-audio-continuity.md → task/archive/2026-06-11/
+
+## [2026-06-11 16:00] archived | 009-session-handoff-av-sync
+- moved: task/009-session-handoff-av-sync.md → task/archive/2026-06-12/
+- note: T005 ปิด phase; local audio/sync complete
+
+## [2026-06-11 16:00] created | 010-session-handoff-cloud-gemini
+- type: handoff
+- note: session ถัดไป — --mode cloud (Gemini) แทน local NLLB + Edge

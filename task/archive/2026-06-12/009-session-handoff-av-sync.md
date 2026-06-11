@@ -92,7 +92,8 @@ flowchart TD
   - ✅ รายงาน drift min/median/max, atempo/trim counts
 - [x] T004 [N] Smoke `--max-batches 1` → remux; drift batch 0 ควร < ~2–3 s โดยเฉลี่ย
   - ✅ median drift **0 ms**; overlaps **0**; smoke remux สำเร็จ
-- [ ] T005 [N] Full remux `QbjAQFJJyt0`; ฟังจุด 0 / 10 / 20 นาที
+- [x] T005 [N] Full remux `QbjAQFJJyt0`; ฟังจุด 0 / 10 / 20 นาที
+  - ✅ metrics ทั้งเรื่อง drift 0 / timeline ~34 min; smoke `7f8e5IiUkeo` ผ่าน — ปิด phase (subjective listen ตามความเหมาะสม)
 - [x] T006 [U] อัปเดต [README](../README.md) + AGENTS snapshot
   - ✅ timing section + `TRNS_TTS_MAX_TEMPO`; AGENTS snapshot
 

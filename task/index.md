@@ -6,10 +6,15 @@ Read for **active** vs **archived** tasks. Use recent entries in `task/log.md` o
 
 | Slug | Title | Type | Tags | Updated | Status |
 |------|-------|------|------|---------|--------|
-| [008-dub-audio-continuity](./008-dub-audio-continuity.md) | 008 — Dub audio continuity & overlap fix | improvement | audio, render, dub | 2026-06-12 | done |
-| [009-session-handoff-av-sync](./009-session-handoff-av-sync.md) | 009 — Session handoff: A/V sync | handoff | continuity, audio, sync | 2026-06-11 | open |
+| [010-session-handoff-cloud-gemini](./010-session-handoff-cloud-gemini.md) | 010 — Session handoff: Cloud mode (Gemini) | handoff | continuity, cloud, gemini | 2026-06-11 | open |
 
 ## Archived (`task/archive/`)
+
+### 2026-06-12
+
+| Slug | Title | Type | Tags | Updated | Status |
+|------|-------|------|------|---------|--------|
+| [009-session-handoff-av-sync](../archive/2026-06-12/009-session-handoff-av-sync.md) | 009 — Session handoff: A/V sync | handoff | continuity, audio, sync | 2026-06-11 | done |
 
 ### 2026-06-11
 
@@ -22,3 +27,4 @@ Read for **active** vs **archived** tasks. Use recent entries in `task/log.md` o
 | [005-brt-constraints-risks](../archive/2026-06-11/005-brt-constraints-risks.md) | BRT005 — Constraints & risks | planning | brt, legal, risks | 2026-06-11 | done |
 | [006-poc-implementation-scaffold](../archive/2026-06-11/006-poc-implementation-scaffold.md) | 006 — POC scaffold | execution | poc, phase1 | 2026-06-11 | done |
 | [007-session-handoff](../archive/2026-06-11/007-session-handoff.md) | 007 — Session handoff | handoff | continuity, poc | 2026-06-11 | done |
+| [008-dub-audio-continuity](../archive/2026-06-11/008-dub-audio-continuity.md) | 008 — Dub audio continuity & overlap fix | improvement | audio, render, dub | 2026-06-12 | done |
