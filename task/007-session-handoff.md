@@ -79,7 +79,9 @@ trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --res
 
 ## Checklist (สำหรับ session ใหม่)
 
-- [ ] T001 รัน batch 2–6 (`--resume --skip-render`) จน tts_done = 1126
-- [ ] T002 รัน mux (`--resume` ไม่ใส่ skip-render) → `output.th.mp4`
+- [x] T001 รัน batch 2–6 (`--resume --skip-render`) จน tts_done = 1126
+  - ✅ tts_done 1126/1126, batches 000–006 done (~37 min wall-clock)
+- [x] T002 รัน mux (`--resume` ไม่ใส่ skip-render) → `output.th.mp4`
+  - ✅ `output.th.mp4` (333 MB) + `output.th.srt`; แก้ chunked ffmpeg + winget ffmpeg discovery
 - [ ] T003 อัปเดต T012 ใน [006](./006-poc-implementation-scaffold.md) + AGENTS snapshot
 - [ ] T004 (optional) T009 faster-whisper fallback

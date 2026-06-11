@@ -64,3 +64,7 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 
 ## [2026-06-11 20:00] interrupted | batch-2-6-run
 - note: คำสั่ง dub --resume ถูก interrupt ~69s; batch 2 ยังไม่เริ่ม
+
+## [2026-06-11 13:35] executed | 007-session-handoff
+- completed: T001, T002
+- note: batch 2–6 done; output.th.mp4 muxed; fix Win cmdline limit + ffmpeg PATH

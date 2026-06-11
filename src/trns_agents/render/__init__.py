@@ -4,6 +4,7 @@ import subprocess
 from pathlib import Path
 
 from ..models import Segment
+from .audio import _ffmpeg_bin
 
 
 def ms_to_srt_time(ms: int) -> str:
@@ -35,6 +36,8 @@ def download_video(url: str, out_path: Path) -> Path:
         "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
         "--merge-output-format",
         "mp4",
+        "--ffmpeg-location",
+        _ffmpeg_bin(),
         "-o",
         str(out_path),
         url,
@@ -45,7 +48,7 @@ def download_video(url: str, out_path: Path) -> Path:
 
 def replace_audio(video_path: Path, audio_path: Path, out_path: Path) -> Path:
     cmd = [
-        "ffmpeg",
+        _ffmpeg_bin(),
         "-y",
         "-i",
         str(video_path),
