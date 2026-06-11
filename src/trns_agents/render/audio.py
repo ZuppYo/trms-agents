@@ -30,7 +30,7 @@ def _ffmpeg_mix_segments(clips: list[Segment], total_sec: float, out_path: Path)
         filter_parts.append(f"[{i}:a]adelay={delay_ms}|{delay_ms}[a{i}]")
     mix_inputs = "".join(f"[a{i}]" for i in range(len(clips)))
     filter_parts.append(
-        f"{mix_inputs}amix=inputs={len(clips)}:duration=longest:dropout_transition=0[outa]"
+        f"{mix_inputs}amix=inputs={len(clips)}:duration=longest:dropout_transition=0:normalize=0[outa]"
     )
     cmd = [
         _ffmpeg_bin(),
@@ -57,7 +57,7 @@ def _ffmpeg_mix_wavs(wav_paths: list[Path], total_sec: float, out_path: Path) ->
         inputs.extend(["-i", str(p)])
     n = len(wav_paths)
     mix_inputs = "".join(f"[{i}:a]" for i in range(n))
-    filter_complex = f"{mix_inputs}amix=inputs={n}:duration=longest:dropout_transition=0[outa]"
+    filter_complex = f"{mix_inputs}amix=inputs={n}:duration=longest:dropout_transition=0:normalize=0[outa]"
     cmd = [
         _ffmpeg_bin(),
         "-y",
