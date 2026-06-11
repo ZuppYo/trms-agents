@@ -30,7 +30,8 @@ Related: [003-brt-pipeline-architecture](./003-brt-pipeline-architecture.md) · 
   - ✅ batch 0–1 done (329 segments)
 - [x] T011b [N] ติดตั้ง FFmpeg + yt-dlp
   - ✅ winget; ffmpeg 8.1.1, yt-dlp 2026.06.09
-- [ ] T012 [N] รัน batch 2–6 + FFmpeg mux → **handoff [007](./007-session-handoff.md)**
+- [x] T012 [N] รัน batch 2–6 + FFmpeg mux → **handoff [007](./007-session-handoff.md)**
+  - ✅ 1126/1126 segments; `output.th.mp4` + `output.th.srt`; แก้ chunked ffmpeg + `amix normalize=0`
 
 ## Run (local-only workflow)
 
@@ -49,4 +50,4 @@ trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --res
 trns-agents dub "…" --mode local --redo-batches 0 --max-batches 1 --skip-render
 ```
 
-Prerequisites สำหรับ MP4 สุดท้าย: **FFmpeg** + **yt-dlp** ใน PATH
+Prerequisites สำหรับ MP4 สุดท้าย: **FFmpeg** + **yt-dlp** (โค้ด auto-discover winget ffmpeg ถ้าไม่อยู่ใน PATH)

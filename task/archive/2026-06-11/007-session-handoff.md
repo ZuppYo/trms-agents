@@ -14,7 +14,7 @@ Related: [006-poc-implementation-scaffold](./006-poc-implementation-scaffold.md)
 ## Task Requirement
 
 - Goal: ให้ session ใหม่ทำงานต่อได้ทันทีโดยไม่ต้องอ่าน chat history ยาว
-- Next work: รัน batch 2–6 → mux `output.th.mp4` → (optional) T009 Whisper
+- Next work: — (POC closed; ดู archive สำหรับ history)
 
 ## สรุปโปรเจกต (1 ย่อหน้า)
 
@@ -32,34 +32,23 @@ Related: [006-poc-implementation-scaffold](./006-poc-implementation-scaffold.md)
 | video_id | `QbjAQFJJyt0` |
 | Work dir | `.trns-agents/QbjAQFJJyt0/` |
 | Total segments | 1126 (~34 min, 7 batches × ~5 min) |
-| **tts_done** | **329** (batch 0–1) |
-| Pending batches | **2, 3, 4, 5, 6** |
+| **tts_done** | **1126/1126** (batches 000–006) |
+| Output | `output.th.mp4` (~333 MB) + `output.th.srt` |
 | FFmpeg | ✅ 8.1.1 (winget Gyan.FFmpeg) |
 | yt-dlp | ✅ 2026.06.09 |
 | venv | `e:\SRC\ai\my\trns-agents\.venv` |
 
-## คำสั่งถัดไป (copy-paste)
+## คำสั่งที่ใช้บ่อย
 
 ```powershell
 cd E:\SRC\ai\my\trns-agents
 .venv\Scripts\activate
 
-# 1) รัน batch 2–6 (~40–50 นาที wall-clock)
-trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --resume --skip-render
-
-# ตรวจ progress
-python -c "from pathlib import Path; import json; p=Path('.trns-agents/QbjAQFJJyt0/batches'); print([x.name for x in p.iterdir() if (x/'.done').exists()]); d=json.load(open('.trns-agents/QbjAQFJJyt0/segments.json',encoding='utf-8')); print('tts_done', sum(1 for s in d['segments'] if s['status']=='tts_done'))"
-
-# 2) หลังครบ 1126 — download + mux MP4
+# remux หลังแก้ TTS / assemble (ข้าม translate+TTS)
 trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --resume
-# output: .trns-agents/QbjAQFJJyt0/output.th.mp4 + output.th.srt
-```
 
-## New session prompt (แนะนำ)
-
-```
-@task/007-session-handoff.md go
-รัน batch 2–6 แล้ว mux MP4 สำหรับ QbjAQFJJyt0 (local mode)
+# redo batch ที่แปลผิด
+trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --redo-batches 3 --max-batches 1 --skip-render
 ```
 
 ## Reload pack (อ่านก่อนทำงาน)
@@ -73,9 +62,9 @@ trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --res
 
 - **ไม่ใช้ cloud** — ไม่ต้อง `GEMINI_API_KEY`
 - NLLB แปลคุณภาพพอใช้ แต่ไม่ natural เท่า LLM
-- รัน batch 2–6 ถูก interrupt ครั้งหนึ่งใน session ก่อน — ยังไม่เริ่ม batch 2
-- `--skip-render` ข้าม download/mux; รันครั้งสุดท้ายไม่ใส่ flag นี้
-- T009 (faster-whisper) ยังไม่ทำ — ไม่ block งานปัจจุบัน (วิดีโอมี caption)
+- `--skip-render` ข้าม download/mux; remux ไม่ใส่ flag นี้
+- แก้เสียงเงียบ: `amix normalize=0` ใน `render/audio.py`
+- T004 (faster-whisper) ยกเลิก — วิดีโอทดสอบมี caption
 
 ## Checklist (สำหรับ session ใหม่)
 
@@ -83,5 +72,7 @@ trns-agents dub "https://www.youtube.com/watch?v=QbjAQFJJyt0" --mode local --res
   - ✅ tts_done 1126/1126, batches 000–006 done (~37 min wall-clock)
 - [x] T002 รัน mux (`--resume` ไม่ใส่ skip-render) → `output.th.mp4`
   - ✅ `output.th.mp4` (333 MB) + `output.th.srt`; แก้ chunked ffmpeg + winget ffmpeg discovery
-- [ ] T003 อัปเดต T012 ใน [006](./006-poc-implementation-scaffold.md) + AGENTS snapshot
-- [ ] T004 (optional) T009 faster-whisper fallback
+- [x] T003 อัปเดต T012 ใน [006](./006-poc-implementation-scaffold.md) + AGENTS snapshot
+  - ✅ T012 done; AGENTS + 007 status table อัปเดต
+- [x] T004 (optional) T009 faster-whisper fallback
+  - ⚠️ ยกเลิก — ไม่ทำ (user request)

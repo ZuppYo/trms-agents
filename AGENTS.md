@@ -5,24 +5,25 @@
 YouTube EN → TH dubbing assistant — **local-first** Phase 1 (personal use)
 
 **Progress (QbjAQFJJyt0)**
-- Batch 0–1 done: **329/1126** segments + partial `output.th.srt`
-- Next: batch 2–6 → mux `output.th.mp4`
+- POC complete: **1126/1126** segments, batches 000–006
+- Output: `.trns-agents/QbjAQFJJyt0/output.th.mp4` + `output.th.srt`
 - FFmpeg ✅ | yt-dlp ✅
 
 ## Reload pack (new session)
 
-- `@task/007-session-handoff.md` ← **start here**
-- `@task/006-poc-implementation-scaffold.md`
+- `@AGENTS.md`
+- `@task/index.md`
+- `@task/archive/2026-06-11/006-poc-implementation-scaffold.md`
 - `@src/trns_agents/pipeline.py`
 
 ## Continuity — latest activity
 
 ### Snapshot (2026-06-11)
 
-- Done: NLLB local, batch 0–1, FFmpeg/yt-dlp installed
-- Interrupted: batch 2–6 run (not started)
-- Next: [007-session-handoff](./task/007-session-handoff.md) T001–T002
-- **Recommend: new session** with handoff prompt
+- Done: Phase 1 POC — local dub QbjAQFJJyt0 complete
+- Done: tasks 001–007 archived; T004 (whisper) ยกเลิก
+- Next: วิดีโอใหม่ / Phase 2 (cloud, quality) — สร้าง task ใหม่เมื่อพร้อม
+- Reload: `@task/archive/2026-06-11/006-poc-implementation-scaffold.md`
 
 ## Non-negotiable rules
 

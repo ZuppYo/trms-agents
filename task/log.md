@@ -68,3 +68,19 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 ## [2026-06-11 13:35] executed | 007-session-handoff
 - completed: T001, T002
 - note: batch 2–6 done; output.th.mp4 muxed; fix Win cmdline limit + ffmpeg PATH
+
+## [2026-06-11 14:00] executed | 007-session-handoff
+- completed: T003
+- note: T012 done in 006; AGENTS snapshot + 007 status updated
+
+## [2026-06-11 14:00] executed | 006-poc-implementation-scaffold
+- completed: T012
+- note: POC QbjAQFJJyt0 complete — 1126 segments, output.th.mp4
+
+## [2026-06-11 15:00] cancelled | 007-session-handoff
+- completed: T004
+- note: faster-whisper fallback ยกเลิก (user request)
+
+## [2026-06-11 15:00] archived | 001–007
+- moved: task/001–007 → task/archive/2026-06-11/
+- note: Phase 1 POC closed; all numbered tasks archived
