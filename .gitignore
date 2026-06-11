@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.trns-agents/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+*.mp4
+*.wav
+*.srt
+*.vtt

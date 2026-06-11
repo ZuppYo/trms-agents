@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trns-agents"
+version = "0.1.0"
+description = "YouTube EN→TH dubbing assistant (personal use)"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.0",
+    "click>=8.1",
+    "python-dotenv>=1.0",
+    "youtube-transcript-api>=1.0",
+    "yt-dlp>=2024.0",
+    "google-genai>=1.0",
+    "edge-tts>=6.1",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+local = [
+    "faster-whisper>=1.0",
+    "transformers>=4.40",
+    "torch>=2.0",
+]
+
+[project.scripts]
+trns-agents = "trns_agents.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

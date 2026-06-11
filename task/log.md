@@ -41,3 +41,19 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 ## [2026-06-11 15:00] executed | 003-brt-pipeline-architecture
 - completed: T001–T006
 - note: chunked pipeline, resume, work dir, dual backend, mermaid
+
+## [2026-06-11 16:00] executed | 004-brt-tech-stack-evaluation
+- completed: T004, T006
+- note: cost ~$2-5/hr cloud; requirements.txt + pyproject.toml
+
+## [2026-06-11 16:00] executed | 005-brt-constraints-risks
+- completed: T001–T005
+- note: personal use GO
+
+## [2026-06-11 16:00] created | 006-poc-implementation-scaffold
+- type: execution
+- note: Python CLI + pipeline skeleton
+
+## [2026-06-11 16:00] executed | 006-poc-implementation-scaffold
+- completed: T001–T006
+- note: src/trns_agents package; T007 smoke test pending

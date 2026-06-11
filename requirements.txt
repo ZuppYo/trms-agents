@@ -1,0 +1,22 @@
+# Core
+pydantic>=2.0
+click>=8.1
+python-dotenv>=1.0
+
+# YouTube / media
+youtube-transcript-api>=1.0
+yt-dlp>=2024.0
+
+# Cloud (Gemini)
+google-genai>=1.0
+
+# Local translate / ASR (optional — install extras as needed)
+# faster-whisper>=1.0
+# transformers>=4.40
+# torch>=2.0
+
+# Local TTS
+edge-tts>=6.1
+
+# Utils
+rich>=13.0

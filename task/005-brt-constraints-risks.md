@@ -13,50 +13,45 @@ Related: [004-brt-tech-stack-evaluation](./004-brt-tech-stack-evaluation.md) · 
 
 ## Task Requirement
 
-- Goal: ระบุข้อจำกัดและความเสี่ยงก่อน implement — โดยเฉพาะ YouTube ToS และลิขสิทธิ์
-- In scope: legal/ToS, technical risks, mitigation
+- Goal: ระบุข้อจำกัดและความเสี่ยงก่อน implement
+- In scope: legal/ToS, technical risks, mitigation, go/no-go
 - Out of scope: คำแนะนำทางกฎหมายเชิง professional
 
-## Legal & ToS (จาก web research)
+## Legal posture (confirmed)
 
-### YouTube Terms of Service
-- **ห้ามดาวน์โหลด** เนื้อหาโดยไม่มีปุ่ม download หรือ permission ([YouTube ToS](https://www.youtube.com/static?template=terms))
-- **ห้ามใช้ automated means** (scrapers, bots) โดยไม่ได้รับอนุญาตเป็นลายลักษณ์อักษร
-- อนุญาต: ดูผ่าน embed player, personal non-commercial viewing
+| ข้อ | คำตอบผู้ใช้ |
+|-----|-------------|
+| Use case | **Personal only** — ใช้เอง Phase 1 |
+| Re-upload / แจกจ่าย | **ไม่ทำ** |
+| Acceptable risk | ยอมรับ gray area ของ yt-dlp / transcript scrape ภายใต้ personal use |
 
-### YouTube API Developer Policies
-- ห้าม **download/cache/store** audiovisual content โดยไม่ได้รับ approval จาก YouTube ([Developer Policies](https://developers.google.com/youtube/terms/developer-policies))
-- ห้าม facilitate copyright infringement
+> Disclaimer: ไม่ใช่คำแนะนำทางกฎหมาย — ดู [YouTube ToS](https://www.youtube.com/static?template=terms)
 
-### ผลกระทบต่อ trns-agents
-| การกระทำ | ความเสี่ยง | แนวทางลดความเสี่ยง |
-|----------|-----------|-------------------|
-| yt-dlp ดาวน์โหลดวิดีโอ | ละเมิด ToS ถ้าใช้เชิงพาณิชย์/แจกจ่าย | **personal use only**; ไม่ re-upload; ไม่แจกไฟล์สาธารณะ |
-| youtube-transcript-api scrape | gray area | ใช้เฉพาะ transcript ที่ YouTube เผยแพร่; พิจารณา TranscriptAPI ถ้า production |
-| สร้างวิดีโอ dub แล้วแชร์ | ลิขสิทธิ์ของ creator | ได้รับอนุญาตจาก rights holder หรือใช้เฉพาะส่วนตัว |
+## Mitigations implemented Phase 1
 
-> **Disclaimer:** ข้อมูลนี้เพื่อการวางแผน ไม่ใช่คำแนะนำทางกฎหมาย
+| Risk | Mitigation ใน code/docs |
+|------|-------------------------|
+| ToS / copyright | CLI docstring + AGENTS: personal use only |
+| API keys leaked | `.env` + `.gitignore` |
+| วิดีโอยาวล้มกลางทาง | batch checkpoint + `--resume` |
+| Transcript scrape fail | manual `--transcript` + Whisper (optional extra) |
+| ค่า API สูง | `--mode local`; cost doc ใน BRT004 |
+| FFmpeg missing | clear error จาก subprocess |
 
-## Technical risks
+## Decision
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| YouTube เปลี่ยน API/scrape | transcript ดึงไม่ได้ | fallback Whisper; หรือ paid API |
-| TTS ไทยอ่านผิดคำ | คุณภาพต่ำ | LLM polish ก่อน TTS; แบ่ง chunk สั้น |
-| Lip-sync ไม่ตรง | UX แย่ Phase 1 | ยอมรับใน Phase 1; Phase 2 Wav2Lip |
-| วิดีโอยาว TTS drift | เสียงเพี้ยน | chunk < 2 นาที; Gemini แนะนำ |
-| ค่า API สูง | เกินงบ | cache layers; Edge-TTS ฟรี |
-| Windows FFmpeg setup | blocker dev | document install path |
+- **Legal posture:** personal use, no redistribution
+- **Go for implementation:** **GO** — POC scaffold เริ่มแล้ว (`src/trns_agents/`)
 
 ## Checklist
 
-- [ ] T001 [N] ผู้ใช้ยืนยัน **use case ส่วนตัว / ไม่ re-upload**
-- [ ] T002 [N] ระบุ **acceptable legal posture** (personal only / licensed content / other)
-- [ ] T003 [N] ยืนยัน **risk mitigations** ที่จะ implement ใน Phase 1
-- [ ] T004 [N] เพิ่มข้อจำกัดที่จำเป็นใน [AGENTS.md](../AGENTS.md) non-negotiable rules
-- [ ] T005 [N] สรุป **go/no-go** สำหรับเริ่ม implementation
-
-## Decision (กรอกหลัง brainstorm)
-
-- Legal posture: _(รอกรอก)_
-- Go for implementation: _(รอกรอก)_
+- [x] T001 [N] ผู้ใช้ยืนยัน **use case ส่วนตัว / ไม่ re-upload**
+  - ✅ ยืนยันใน BRT001/BRT002
+- [x] T002 [N] ระบุ **acceptable legal posture**
+  - ✅ personal only
+- [x] T003 [N] ยืนยัน **risk mitigations** Phase 1
+  - ✅ ตารางด้านบน
+- [x] T004 [N] เพิ่มข้อจำกัดใน [AGENTS.md](../AGENTS.md)
+  - ✅ มีอยู่แล้ว + POC go
+- [x] T005 [N] สรุป **go/no-go**
+  - ✅ GO
