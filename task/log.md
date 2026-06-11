@@ -57,3 +57,10 @@ Newest entries at the **end**. Read tail only (~10 events) unless debugging hist
 ## [2026-06-11 18:00] executed | 006-poc-implementation-scaffold
 - completed: T008, T008b, T010, T011
 - note: NLLB local; batch 0-1 Thai dub ~326 segments
+
+## [2026-06-11 20:00] created | 007-session-handoff
+- type: handoff
+- note: token budget — แนะนำ new session; batch 2-6 + mux pending
+
+## [2026-06-11 20:00] interrupted | batch-2-6-run
+- note: คำสั่ง dub --resume ถูก interrupt ~69s; batch 2 ยังไม่เริ่ม

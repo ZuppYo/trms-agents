@@ -12,6 +12,7 @@ Read for **active** vs **archived** tasks. Use recent entries in `task/log.md` o
 | [004-brt-tech-stack-evaluation](./004-brt-tech-stack-evaluation.md) | BRT004 — Tech stack evaluation | planning | brt, tech-stack | 2026-06-11 | done |
 | [005-brt-constraints-risks](./005-brt-constraints-risks.md) | BRT005 — Constraints & risks | planning | brt, legal, risks | 2026-06-11 | done |
 | [006-poc-implementation-scaffold](./006-poc-implementation-scaffold.md) | 006 — POC scaffold | execution | poc, phase1 | 2026-06-11 | open |
+| [007-session-handoff](./007-session-handoff.md) | 007 — Session handoff | handoff | continuity, poc | 2026-06-11 | open |
 
 ## Archived (`task/archive/`)
 

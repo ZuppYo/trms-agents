@@ -27,9 +27,10 @@ Related: [003-brt-pipeline-architecture](./003-brt-pipeline-architecture.md) · 
 - [x] T010 [N] Redo batch 0 ด้วย NLLB + TTS ไทย
   - ✅ ~163 segments, SRT ไทย (เช่น "ดีมากเลย มันแค่เพิ่มทุกอย่าง")
 - [x] T011 [N] รัน batch 1 (local)
-  - ✅ batch 0–1 done (~326 segments)
-- [ ] T009 [N] Wire faster-whisper fallback
-- [ ] T012 [N] รัน batch 2–6 + FFmpeg mux (ต้องติดตั้ง ffmpeg + yt-dlp)
+  - ✅ batch 0–1 done (329 segments)
+- [x] T011b [N] ติดตั้ง FFmpeg + yt-dlp
+  - ✅ winget; ffmpeg 8.1.1, yt-dlp 2026.06.09
+- [ ] T012 [N] รัน batch 2–6 + FFmpeg mux → **handoff [007](./007-session-handoff.md)**
 
 ## Run (local-only workflow)
 

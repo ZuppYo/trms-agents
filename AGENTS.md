@@ -4,34 +4,27 @@
 
 YouTube EN → TH dubbing assistant — **local-first** Phase 1 (personal use)
 
-**In scope**
-- CLI: `trns-agents dub <url> --mode local [--resume] [--redo-batches 0] [--max-batches N]`
-- Translate: **NLLB-200** local | TTS: **Edge `th-TH-NiwatNeural`**
-- Checkpoint: `.trns-agents/{video_id}/` — 7 batches (~5 min each)
-- Code: `src/trns_agents/`
-
 **Progress (QbjAQFJJyt0)**
-- Batch 0–1 done (~326/1126 segments) + `output.th.srt`
-- Batch 2–6 pending | MP4 pending (needs FFmpeg + yt-dlp)
+- Batch 0–1 done: **329/1126** segments + partial `output.th.srt`
+- Next: batch 2–6 → mux `output.th.mp4`
+- FFmpeg ✅ | yt-dlp ✅
 
-## Non-negotiable rules
+## Reload pack (new session)
 
-- Personal use only
-- Task workflow: `task/index.md` + `task/log.md`
-- Local mode default — cloud optional later
-- `--resume` / `--redo-batches` for long video workflow
-
-## Reload pack
-
+- `@task/007-session-handoff.md` ← **start here**
 - `@task/006-poc-implementation-scaffold.md`
 - `@src/trns_agents/pipeline.py`
-- `@.trns-agents/QbjAQFJJyt0/segments.json`
 
 ## Continuity — latest activity
 
 ### Snapshot (2026-06-11)
 
-- Done: NLLB local translate + `--redo-batches`
-- Done: batch 0–1 dubbed (local) for QbjAQFJJyt0
-- Next: batch 2–6 (`--resume --max-batches 3…`) then FFmpeg mux
-- Reload: `@task/006-poc-implementation-scaffold.md`
+- Done: NLLB local, batch 0–1, FFmpeg/yt-dlp installed
+- Interrupted: batch 2–6 run (not started)
+- Next: [007-session-handoff](./task/007-session-handoff.md) T001–T002
+- **Recommend: new session** with handoff prompt
+
+## Non-negotiable rules
+
+- Personal use only | local mode default
+- `--resume` for long video | work dir `.trns-agents/{video_id}/`
